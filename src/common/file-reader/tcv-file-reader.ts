@@ -1,77 +1,36 @@
-import { readFileSync } from 'fs';
+import EventEmitter from 'events';
+import { createReadStream } from 'fs';
+
 import { FileReaderInterface } from './file-reader.interface';
-import { UserType } from '../../types/user-type.enum.js';
-import { CityType } from '../../types/city-type.enum.js';
-import { AccomodationType } from '../../types/accommodation-type.enum.js';
-import { Offer } from '../../types/offer.type';
 
-export default class TSVFileReader implements FileReaderInterface {
-  private rawData = '';
-
-  constructor(public filename: string) {}
-
-  public read(): void {
-    this.rawData = readFileSync(this.filename, {encoding: 'utf-8'});
+export default class TSVFileReader extends EventEmitter implements FileReaderInterface {
+  constructor(public filename: string) {
+    super();
   }
 
-  public toArray(): Offer[]  {
-    if (!this.rawData) {
-      return [];
+  public async read(): Promise<void> {
+    const stream = createReadStream(this.filename, {
+      highWaterMark: 16384, // 16KB
+      encoding: 'utf-8',
+    });
+
+    let lineRead = '';
+    let endLinePosition = -1;
+    let importedRowCount = 0;
+
+    for await (const chunk of stream) {
+      lineRead += chunk.toString();
+
+
+      while ((endLinePosition = lineRead.indexOf('\n')) >= 0) {
+        const completeRow = lineRead.slice(0, endLinePosition + 1);
+        lineRead = lineRead.slice(++endLinePosition);
+        importedRowCount++;
+
+        this.emit('line', completeRow);
+      }
     }
 
-    return this.rawData
-      .split('\n')
-      .filter((row) => row.trim() !== '')
-      .map((line) => line.split('\t'))
-      .map(([...fields]) => {
-        const [
-          title,
-          description,
-          createDate,
-          city,
-          previewImage,
-          photos,
-          isPremium,
-          rating,
-          accomadationType,
-          rooms,
-          guests,
-          price,
-          facilities,
-          firstname,
-          email,
-          avatarPath,
-          password,
-          type,
-          comments,
-          coords
-        ] = fields;
-
-        return {
-          title,
-          description,
-          postDate: new Date(createDate),
-          city: CityType[ city as 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf'],
-          previewImage: previewImage,
-          photos: photos.split(';').map((url) => url),
-          isPremium: JSON.parse(isPremium),
-          rating: Number.parseInt(rating, 10),
-          accomadationType: AccomodationType[accomadationType as 'apartment' | 'house' | 'room' | 'hotel'],
-          rooms: Number.parseInt(rooms, 10),
-          guests: Number.parseInt(guests, 10),
-          price: Number.parseInt(price, 10),
-          facilities: facilities.split(';').map((facility) => facility),
-          user: { firstname, email, avatarPath, password, type: UserType[type as 'Pro' | 'Normal']  },
-          comments: Number.parseInt(comments, 10),
-          coords: coords.split(';').reduce((acc, current) => {
-            const values = current.split(':');
-            const [key, value] = values;
-            return {
-              ...acc,
-              [key]: value,
-            };
-          }, {}),
-        };
-      });
+    this.emit('end', importedRowCount);
   }
 }

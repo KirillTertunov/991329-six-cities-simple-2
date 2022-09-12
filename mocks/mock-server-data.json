@@ -1,0 +1,170 @@
+{
+  "api": {
+    "title": [
+      "Apartments",
+      "Quirky Room",
+      "Cozy room",
+      "Bright apartment",
+      "wide spaceful room"
+    ],
+    "description": [
+      "Small cozy apart in downtown",
+      "Wide bright room in suberb",
+      "2-bedrooms apartment",
+      "Small cozy apart",
+      "Quirky welcome room",
+      "Wide bright room"
+    ],
+    "city": [
+      "Paris",
+      "Cologne",
+      "Brussels",
+      "Amsterdam",
+      "Hamburg",
+      "Dusseldorf"
+    ],
+    "previewImage": [
+      "https://source.unsplash.com/random1.png",
+      "https://source.unsplash.com/image1.png",
+      "https://source.unsplash.com/image2.png",
+      "https://source.unsplash.com/image12.png",
+      "https://source.unsplash.com/image101.png",
+      "https://source.unsplash.com/image777.png"
+    ],
+    "photos": [
+      "https://source.unsplash.com/random1.png;https://source.unsplash.com/random2.png;https://source.unsplash.com/random3.png;https://source.unsplash.com/random4.png;https://source.unsplash.com/random5.png;https://source.unsplash.com/random6.png",
+      "https://source.unsplash.com/image1.png;https://source.unsplash.com/image2.png;https://source.unsplash.com/image3.png;https://source.unsplash.com/image4.png;https://source.unsplash.com/image5.png;https://source.unsplash.com/image6.png",
+      "https://source.unsplash.com/image21.png;https://source.unsplash.com/image22.png;https://source.unsplash.com/image23.png;https://source.unsplash.com/image24.png;https://source.unsplash.com/image25.png;https://source.unsplash.com/image26.png",
+      "https://source.unsplash.com/image31.png;https://source.unsplash.com/image32.png;https://source.unsplash.com/image33.png;https://source.unsplash.com/image34.png;https://source.unsplash.com/image35.png;https://source.unsplash.com/image36.png",
+      "https://source.unsplash.com/image41.png;https://source.unsplash.com/image42.png;https://source.unsplash.com/image43.png;https://source.unsplash.com/image44.png;https://source.unsplash.com/image45.png;https://source.unsplash.com/image46.png",
+      "https://source.unsplash.com/image51.png;https://source.unsplash.com/image52.png;https://source.unsplash.com/image53.png;https://source.unsplash.com/image54.png;https://source.unsplash.com/image55.png;https://source.unsplash.com/image56.png"
+    ],
+    "isPremium": [
+      "true",
+      "false"
+    ],
+    "rating": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "accomadationType": [
+      "apartment",
+      "house",
+      "room",
+      "hotel"
+    ],
+    "rooms": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "guests": [
+      "6",
+      "10",
+      "2",
+      "22",
+      "14",
+      "10"
+    ],
+    "price": [
+      "2000",
+      "10000",
+      "371",
+      "677",
+      "3092",
+      "12000",
+      "35981",
+      "1090"
+    ],
+    "facilities": [
+      "Breakfast",
+      "Air conditioning",
+      "Laptop friendly workspace",
+      "Baby seat",
+      "Washer",
+      "Towels",
+      "Fridge"
+    ],
+    "comments": [
+      "4",
+      "6",
+      "22",
+      "1",
+      "23",
+      "10"
+    ],
+    "coords": [
+      {
+        "latitude": "48.85661",
+        "longitude": "2.351499"
+      },
+      {
+        "latitude": "50.938361",
+        "longitude": "6.959974"
+      },
+      {
+        "latitude": "50.846557",
+        "longitude": "4.351697"
+      },
+      {
+        "latitude": "52.370216",
+        "longitude": "4.895168"
+      },
+      {
+        "latitude": "53.550341",
+        "longitude": "10.000654"
+      },
+      {
+        "latitude": "51.225402",
+        "longitude": "6.776314"
+      }
+    ],
+    "users": [
+      "Ivan",
+      "Curt",
+      "Sid",
+      "Nancy",
+      "Mike",
+      "Alex"
+    ],
+    "emails": [
+      "snow@pisem.local",
+      "president@dka.local",
+      "fish@big.local",
+      "test@pisem.local",
+      "freedom@pisem.local",
+      "rolan@pochta.local",
+      "author@mir.local",
+      "test@lost.loca",
+      "kujo-fan@story.local"
+    ],
+    "avatar": [
+      "user.jpg",
+      "photo.jpg",
+      "awesome-avatar.jpg",
+      "roland.jpg",
+      "smit.jpg",
+      "coffee.jpg"
+    ],
+    "password": [
+      "dsfsdf3",
+      "fgdfg43",
+      "werwer3",
+      "sdfsdf2",
+      "sdf2",
+      "ghfgfg32"
+    ],
+    "type": [
+      "Pro",
+      "Normal"
+    ]
+  }
+}
