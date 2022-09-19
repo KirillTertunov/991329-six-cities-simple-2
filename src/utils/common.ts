@@ -1,7 +1,14 @@
+import crypto from 'crypto';
+
 import { UserType } from '../types/user-type.enum.js';
 import { CityType } from '../types/city-type.enum.js';
 import { AccomodationType } from '../types/accommodation-type.enum.js';
 import { Offer } from '../types/offer.type';
+
+export const createSHA256 = (line: string, salt: string): string => {
+  const shaHasher = crypto.createHmac('sha256', salt);
+  return shaHasher.update(line).digest('hex');
+};
 
 export const createOffer = (row: string) => {
   const tokens = row.replace('\n', '').split('\t');

@@ -3,7 +3,10 @@ import { createReadStream } from 'fs';
 
 import { FileReaderInterface } from './file-reader.interface';
 
-export default class TSVFileReader extends EventEmitter implements FileReaderInterface {
+export default class TSVFileReader
+  extends EventEmitter
+  implements FileReaderInterface
+{
   constructor(public filename: string) {
     super();
   }
@@ -21,13 +24,14 @@ export default class TSVFileReader extends EventEmitter implements FileReaderInt
     for await (const chunk of stream) {
       lineRead += chunk.toString();
 
-
       while ((endLinePosition = lineRead.indexOf('\n')) >= 0) {
         const completeRow = lineRead.slice(0, endLinePosition + 1);
         lineRead = lineRead.slice(++endLinePosition);
         importedRowCount++;
 
-        this.emit('line', completeRow);
+        await new Promise((resolve) => {
+          this.emit('line', completeRow, resolve);
+        });
       }
     }
 
