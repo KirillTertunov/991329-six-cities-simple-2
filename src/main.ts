@@ -9,7 +9,12 @@ import { DatabaseInterface } from './common/database-client/database.interface.j
 import { UserServiceInterface } from './modules/user/user-service.interface.js';
 import { UserEntity, UserModel } from './modules/user/user.entity.js';
 import { OfferEntity, OfferModel } from './modules/offer/offer.entity.js';
+import {
+  CommentEntity,
+  CommentModel,
+} from './modules/comment/comment.entity.js';
 import { OfferServiceInterface } from './modules/offer/offer-service.interface.js';
+import { CommentServiceInterface } from './modules/comment/comment-service.interface.js';
 
 import OfferService from './modules/offer/offer.service.js';
 import UserService from './modules/user/user.service.js';
@@ -17,6 +22,7 @@ import DatabaseService from './common/database-client/database.service.js';
 import Application from './app/application.js';
 import ConfigService from './common/config/config.service.js';
 import LoggerService from './common/logger/logger.service.js';
+import CommentService from './modules/comment/comment.service.js';
 
 const applicationContainer = new Container();
 applicationContainer
@@ -47,6 +53,14 @@ applicationContainer
 applicationContainer
   .bind<types.ModelType<OfferEntity>>(Component.OfferModel)
   .toConstantValue(OfferModel);
+
+applicationContainer
+  .bind<CommentServiceInterface>(Component.CommentServiceInterface)
+  .to(CommentService)
+  .inSingletonScope();
+applicationContainer
+  .bind<types.ModelType<CommentEntity>>(Component.CommentModel)
+  .toConstantValue(CommentModel);
 
 const application = applicationContainer.get<Application>(
   Component.Application

@@ -41,6 +41,11 @@ export default class UserService implements UserServiceInterface {
     return this.userModel.findById(userId).exec();
   }
 
+  public async exists(documentId: string): Promise<boolean> {
+    return (await this.userModel
+      .exists({_id: documentId})) !== null;
+  }
+
   public async findOrCreate(
     dto: CreateUserDto,
     salt: string

@@ -3,24 +3,19 @@ import { inject, injectable } from 'inversify';
 
 import { LoggerInterface } from '../common/logger/logger.interface.js';
 import { ConfigInterface } from '../common/config/config.interface.js';
+// import { OfferServiceInterface } from '../modules/offer/offer-service.interface.js';
 import { Component } from '../types/component.types.js';
 import { getURI } from '../utils/db.js';
 import { DatabaseInterface } from '../common/database-client/database.interface.js';
 
 @injectable()
 export default class Application {
-  private logger!: LoggerInterface;
-  private config!: ConfigInterface;
-
   constructor(
-    @inject(Component.ConfigInterface) config: ConfigInterface,
-    @inject(Component.LoggerInterface) logger: LoggerInterface,
-    @inject(Component.DatabaseInterface)
-    private databaseClient: DatabaseInterface
-  ) {
-    this.logger = logger;
-    this.config = config;
-  }
+    @inject(Component.ConfigInterface) private config: ConfigInterface,
+    @inject(Component.LoggerInterface) private logger: LoggerInterface,
+    // @inject(Component.OfferServiceInterface) private offerService: OfferServiceInterface,
+    @inject(Component.DatabaseInterface) private databaseClient: DatabaseInterface
+  ) {}
 
   public async init() {
     this.logger.info('Application initialization…');
@@ -34,5 +29,8 @@ export default class Application {
     );
 
     await this.databaseClient.connect(url);
+
+    // const res = await this.offerService.findById('633997aeb234e976d8fe8460');
+    // console.log(res);
   }
 }
