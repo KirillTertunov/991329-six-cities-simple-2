@@ -1,0 +1,208 @@
+openapi: 3.1.0
+info:
+  title: API server for project «Six cities».
+  description: |-
+    * List of resources and routes for server «Six cities».
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 2.0.0
+
+tags:
+  - name: offers
+    description: Actions with offers.
+  - name: users
+    description: Actions with users.
+  - name: comments
+    description: Actions with comments.
+
+
+paths:
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Registration of users
+      description: Rigister of new user.
+
+      requestBody:
+        description: Data for creating new users.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUser'
+        required: true
+
+      responses:
+        "201":
+          description: User has been registered. User object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "409":
+          description: This email was used by another user.
+
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Auth of user
+      description: Authorise of user by login and password
+
+      requestBody:
+        description: Auth data of existed user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+
+      responses:
+        "201":
+          description: User has been authorised.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+
+        "409":
+          description: Login or password is not valid.
+
+    get:
+      tags:
+        - users
+      summary: Check user status
+      description: Returns users information
+
+  /users/{userId}/avatar:
+    post:
+      tags:
+        - users
+      summary: Upload user avatar
+      description: Upload image of user avatar. Allowed extensions `png` or `jpg`.
+
+  /offee/create:
+    post:
+      tags:
+        - offers
+      summary: Create an offer
+      description: Create new user offer.
+
+      requestBody:
+        description: Data for creating new offer.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createOffer'
+        required: true
+
+      responses:
+        "201":
+          description: User has been registered. User object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "409":
+          description: This email was used by another user.
+
+
+components:
+  schemas:
+    createUser:
+      type: object
+
+      properties:
+        email:
+          type: string
+          example: example@gmail.ru
+
+        firstname:
+          type: string
+          example: Keks
+
+        password:
+          type: string
+          example: 123456
+
+        type:
+          type: string
+          example: Normal
+
+    user:
+      type: object
+
+      properties:
+        id:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+        email:
+          type: string
+          example: example@gmail.com
+
+    token:
+      type: string
+
+      token: string
+      example: 4545XHhndlw23A
+
+    createOffer:
+      type: object
+
+      properties:
+        title:
+          type: string
+          example: wide spaceful room
+
+        description:
+          type: string
+          example: Wide bright room in suberb
+
+        postDate:
+          type: string
+
+        city:
+          type: string
+          example: Brussel
+
+        previewImage:
+          type: string
+          example: exIamge.png
+
+        photos:
+          type: array
+          example: [exIamge1.png, exIamge2.png]
+
+        isPremium:
+          type: boolean
+          example: false
+
+        rating:
+          type: intenger
+          example: 3
+
+        accomadationType:
+          type: string
+          example: house
+
+        rooms:
+          type: intenger
+          example: 2
+        guests:
+          type: intenger
+          example: 2
+
+        price:
+          type: intenger
+          example: 100000
+        facilities:
+          type: array
+          example: [Breakfast]
+
+        coords:
+          type: object
+          example: { latitude: 50.938361, longitude: 6.959974}
