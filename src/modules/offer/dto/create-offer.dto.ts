@@ -5,7 +5,7 @@ import { Coordinates } from '../../../types/coordinate.type.js';
 export default class CreateOfferDto {
   public title!: string;
   public description!: string;
-  public postDate!: Date;
+  // public postDate!: Date;
   public city!: CityType;
   public previewImage!: string;
   public photos!: string[];
@@ -16,7 +16,7 @@ export default class CreateOfferDto {
   public guests!: number;
   public price!: number;
   public facilities!: string[];
-  public userId!: string;
-  public comments!: number;
+  // public userId!: string;
+  // public comments!: number;
   public coords!: Coordinates|object;
 }
