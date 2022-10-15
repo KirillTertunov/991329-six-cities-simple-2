@@ -24,6 +24,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
     this.avatarPath = data.avatarPath;
     this.firstname = data.firstname;
     this.type = data.type;
+    this.password = data.password;
   }
 
   @prop({
@@ -49,7 +50,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
     // minLength: 6,
     // maxLength: 12,
   })
-  private password!: string;
+  public password!: string;
 
   public setPassword(password: string, salt: string) {
     this.password = createSHA256(password, salt);
