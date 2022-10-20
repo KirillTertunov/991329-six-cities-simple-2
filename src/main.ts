@@ -28,6 +28,7 @@ import CommentService from './modules/comment/comment.service.js';
 import OfferController from './modules/offer/offer.controller.js';
 import ExceptionFilter from './common/errors/exception-filter.js';
 import UserController from './modules/user/user.controller.js';
+import CommentController from './modules/comment/comment.controller.js';
 
 const applicationContainer = new Container();
 applicationContainer
@@ -77,6 +78,10 @@ applicationContainer
 applicationContainer
   .bind<ControllerInterface>(Component.UserController)
   .to(UserController)
+  .inSingletonScope();
+applicationContainer
+  .bind<ControllerInterface>(Component.CommentController)
+  .to(CommentController)
   .inSingletonScope();
 
 const application = applicationContainer.get<Application>(

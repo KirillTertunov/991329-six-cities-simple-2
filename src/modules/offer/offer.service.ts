@@ -31,6 +31,11 @@ export default class OfferService implements OfferServiceInterface {
     return this.offerModel.findById(offerId).populate(['userId']).exec();
   }
 
+  public async exists(documentId: string): Promise<boolean> {
+    return (await this.offerModel
+      .exists({_id: documentId})) !== null;
+  }
+
   public async updateById(
     offerId: string,
     dto: UpdateOfferDto
@@ -79,17 +84,28 @@ export default class OfferService implements OfferServiceInterface {
             { $project: { _id: 1 }}
           ],
           // change to comments
-          as: 'commentArr'
+          as: 'comments'
         },
       },
       { $addFields:
         {
           id: { $toString: '$_id'},
-          commentCount: { $size: '$commentArr'},
+          commentCount: { $size: '$comments'},
         }
       },
-      { $unset: 'commentArr' },
-      { $sort: { offerCount: SortType.Down }}
+      { $unset: 'comments' },
+      { $sort: { offerCount: SortType.Down }},
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'userId'
+        }
+      },
+      {
+        $unwind: '$userId'
+      }
 
     ]).exec();
   }
