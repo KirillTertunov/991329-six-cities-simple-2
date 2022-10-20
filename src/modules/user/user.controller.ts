@@ -1,17 +1,19 @@
 import { Request, Response } from 'express';
+import { inject, injectable } from 'inversify';
+import { StatusCodes } from 'http-status-codes';
+
+import {ValidateDtoMiddleware} from '../../common/middlewares/validate-dto.middleware.js';
+import { fillDTO } from '../../utils/common.js';
 
 import LoginUserDto from './dto/login-user.dto.js';
 import CreateUserDto from './dto/create-user.dto.js';
 import HttpError from '../../common/errors/http-error.js';
 import UserResponse from './response/user.response.js';
 import { Controller } from '../../common/controller/controller.js';
-import { inject, injectable } from 'inversify';
 import { Component } from '../../types/component.types.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { HttpMethod } from '../../types/http-method.enum.js';
 import { UserServiceInterface } from './user-service.interface.js';
-import { StatusCodes } from 'http-status-codes';
-import { fillDTO } from '../../utils/common.js';
 import { ConfigInterface } from '../../common/config/config.interface.js';
 
 @injectable()
@@ -30,12 +32,14 @@ export default class UserController extends Controller {
       path: '/register',
       method: HttpMethod.Post,
       handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateUserDto)]
     });
 
     this.addRoute({
       path: '/login',
       method: HttpMethod.Post,
       handler: this.login,
+      middlewares: [new ValidateDtoMiddleware(LoginUserDto)]
     });
   }
 
