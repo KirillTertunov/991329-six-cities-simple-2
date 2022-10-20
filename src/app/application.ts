@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, {Express} from 'express';
+import express, { Express } from 'express';
 import { inject, injectable } from 'inversify';
 
 import { LoggerInterface } from '../common/logger/logger.interface.js';
@@ -19,11 +19,16 @@ export default class Application {
     @inject(Component.ConfigInterface) private config: ConfigInterface,
     @inject(Component.LoggerInterface) private logger: LoggerInterface,
     // @inject(Component.OfferServiceInterface) private offerService: OfferServiceInterface,
-    @inject(Component.ExceptionFilterInterface) private exceptionFilter: ExceptionFilterInterface,
-    @inject(Component.DatabaseInterface) private databaseClient: DatabaseInterface,
-    @inject(Component.OfferController) private OfferController: ControllerInterface,
-    @inject(Component.UserController) private userController: ControllerInterface,
-    @inject(Component.CommentController) private commentController: ControllerInterface,
+    @inject(Component.ExceptionFilterInterface)
+    private exceptionFilter: ExceptionFilterInterface,
+    @inject(Component.DatabaseInterface)
+    private databaseClient: DatabaseInterface,
+    @inject(Component.OfferController)
+    private OfferController: ControllerInterface,
+    @inject(Component.UserController)
+    private userController: ControllerInterface,
+    @inject(Component.CommentController)
+    private commentController: ControllerInterface
   ) {
     this.expressApp = express();
   }
@@ -34,6 +39,10 @@ export default class Application {
 
   public initMiddleware() {
     this.expressApp.use(express.json());
+    this.expressApp.use(
+      '/upload',
+      express.static(this.config.get('UPLOAD_DIRECTORY'))
+    );
   }
 
   public initRoutes() {
@@ -60,7 +69,9 @@ export default class Application {
     this.initExceptionFilters();
 
     this.expressApp.listen(this.config.get('PORT'));
-    this.logger.info(`Server started on http://localhost:${this.config.get('PORT')}`);
+    this.logger.info(
+      `Server started on http://localhost:${this.config.get('PORT')}`
+    );
 
     // const res = await this.offerService.findById('633997aeb234e976d8fe8460');
     // console.log(res);
