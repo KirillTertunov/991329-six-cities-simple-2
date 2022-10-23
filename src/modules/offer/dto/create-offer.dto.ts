@@ -68,7 +68,7 @@ export default class CreateOfferDto {
   @IsArray({message: 'Field facilities must be an array'})
   public facilities!: string[];
 
-  // public userId!: string;
+  public userId!: string;
   // public comments!: number;
   @IsObject()
   @IsNotEmptyObject()

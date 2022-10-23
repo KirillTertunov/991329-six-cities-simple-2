@@ -3,7 +3,8 @@ import { inject, injectable } from 'inversify';
 import { StatusCodes } from 'http-status-codes';
 
 import {ValidateDtoMiddleware} from '../../common/middlewares/validate-dto.middleware.js';
-import { fillDTO } from '../../utils/common.js';
+import { createJWT, fillDTO } from '../../utils/common.js';
+import {JWT_ALGORITM} from './user.constant.js';
 
 import LoginUserDto from './dto/login-user.dto.js';
 import CreateUserDto from './dto/create-user.dto.js';
@@ -17,6 +18,7 @@ import { UserServiceInterface } from './user-service.interface.js';
 import { ConfigInterface } from '../../common/config/config.interface.js';
 import {ValidateObjectIdMiddleware} from '../../common/middlewares/validate-objectid.middleware.js';
 import {UploadFileMiddleware} from '../../common/middlewares/upload-file.middleware.js';
+import LoggedUserResponse from './response/logged-user.response.js';
 
 @injectable()
 export default class UserController extends Controller {
@@ -53,6 +55,18 @@ export default class UserController extends Controller {
         new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar'),
       ]
     });
+
+    this.addRoute({
+      path: '/login',
+      method: HttpMethod.Get,
+      handler: this.checkAuthenticate
+    });
+  }
+
+  public async checkAuthenticate(req: Request, res: Response) {
+    const user = await this.userService.findByEmail(req.user.email);
+
+    this.ok(res, fillDTO(LoggedUserResponse, user));
   }
 
   public async create(
@@ -79,26 +93,38 @@ export default class UserController extends Controller {
   }
 
   public async login(
-    {
-      body,
-    }: Request<Record<string, unknown>, Record<string, unknown>, LoginUserDto>,
-    _res: Response
+    {body}: Request<Record<string, unknown>, Record<string, unknown>, LoginUserDto>,
+    res: Response,
   ): Promise<void> {
-    const existsUser = await this.userService.findByEmail(body.email);
+    const user = await this.userService.verifyUser(body, this.configService.get('SALT'));
 
-    if (!existsUser) {
+    if (!user) {
       throw new HttpError(
         StatusCodes.UNAUTHORIZED,
-        `User with email ${body.email} not found.`,
+        'Unauthorized',
         'UserController'
       );
     }
 
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented',
-      'UserController'
-    );
+    console.log('user =>>>>', JWT_ALGORITM, this.configService.get('JWT_SECRET'));
+
+    let token = null;
+
+    try {
+      token = await createJWT(
+        JWT_ALGORITM,
+        this.configService.get('JWT_SECRET'),
+        { email: user.email, id: user.id}
+      );
+
+    } catch(err) {
+      console.log(err);
+    }
+
+
+    console.log('user =>>>>', token);
+
+    this.ok(res, fillDTO(LoggedUserResponse, {email: user.email, token}));
   }
 
   public async uploadAvatar(req: Request, res: Response) {

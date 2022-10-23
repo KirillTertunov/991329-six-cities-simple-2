@@ -47,10 +47,10 @@ POST http://localhost:4000/users/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "example@gmail.net",
+  "email": "example1@gmail.net",
   "avatarPath": "img.png",
-  "firstname": "John",
-  "password": "secretPassword",
+  "firstname": "John1",
+  "password": "secret123",
   "type": "Pro"
 }
 
@@ -63,8 +63,8 @@ POST http://localhost:4000/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "example@gmail.net",
-  "password": "secretPassword"
+  "email": "example1@gmail.net",
+  "password": "secret123"
 }
 
 ###
@@ -125,3 +125,11 @@ Content-Type: image/png
 
 < /Users/tmp/screen.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+## Check user token
+GET http://localhost:4000/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJpZCI6IjYyOTM0MDgyZDFlMDU5MDBlMmVmYWVjMyIsImlhdCI6MTY1MzkwMzA1OSwiZXhwIjoxNjU0MDc1ODU5fQ.yMN3DID7PoMO1I4-fgwjGVWjdfnpQsCA8TL02APb-rU
+
+###
