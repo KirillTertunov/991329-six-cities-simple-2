@@ -1,8 +1,6 @@
 import {
-  // IsDateString,
   IsEnum,
   IsInt,
-  // IsMongoId,
   IsOptional,
   IsString,
   Max,
@@ -29,9 +27,6 @@ export default class UpdateOfferDto {
   @MinLength(10, { message: 'Minimum title length must be 20' })
   @MaxLength(100, { message: 'Maximum title length must be 1024' })
   public description?: string;
-
-  // @IsOptional()
-  // public postDate?: Date;
 
   @IsOptional()
   @IsEnum(CityType, { message: 'incorrect city' })
@@ -80,12 +75,6 @@ export default class UpdateOfferDto {
   @IsOptional()
   @IsArray({ message: 'Field facilities must be an array' })
   public facilities?: string[];
-
-  // @IsOptional()
-  // public userId?: string;
-
-  // @IsOptional()
-  // public comments?: number;
 
   @IsOptional()
   @IsObject()

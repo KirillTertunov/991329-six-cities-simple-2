@@ -4,7 +4,6 @@ import { inject, injectable } from 'inversify';
 
 import { LoggerInterface } from '../common/logger/logger.interface.js';
 import { ConfigInterface } from '../common/config/config.interface.js';
-// import { OfferServiceInterface } from '../modules/offer/offer-service.interface.js';
 import { Component } from '../types/component.types.js';
 import { getURI } from '../utils/db.js';
 import { DatabaseInterface } from '../common/database-client/database.interface.js';
@@ -19,7 +18,6 @@ export default class Application {
   constructor(
     @inject(Component.ConfigInterface) private config: ConfigInterface,
     @inject(Component.LoggerInterface) private logger: LoggerInterface,
-    // @inject(Component.OfferServiceInterface) private offerService: OfferServiceInterface,
     @inject(Component.ExceptionFilterInterface)
     private exceptionFilter: ExceptionFilterInterface,
     @inject(Component.DatabaseInterface)
@@ -80,8 +78,5 @@ export default class Application {
     this.logger.info(
       `Server started on http://localhost:${this.config.get('PORT')}`
     );
-
-    // const res = await this.offerService.findById('633997aeb234e976d8fe8460');
-    // console.log(res);
   }
 }

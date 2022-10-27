@@ -1,4 +1,3 @@
-// import mongoose from 'mongoose';
 import typegoose, {
   getModelForClass,
   defaultClasses,
@@ -30,15 +29,12 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({
     require: true,
     unique: true,
-    // minLength: 1,
-    // maxLength: 15,
   })
   public firstname!: string;
 
   @prop({
     require: true,
     unique: true,
-    // match: /^([\w-\\.]+@([\w-]+\.)+[\w-]{2,4})?$/
   })
   public email!: string;
 
@@ -47,8 +43,6 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
 
   @prop({
     require: true,
-    // minLength: 6,
-    // maxLength: 12,
   })
   public password!: string;
 

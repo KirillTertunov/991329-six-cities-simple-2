@@ -1,4 +1,3 @@
-// import mongoose from 'mongoose';
 import typegoose, {
   getModelForClass,
   defaultClasses,
@@ -22,16 +21,12 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({
     require: true,
     trim: true,
-    // minlength: 10,
-    // maxlength: 100,
   })
   public title!: string;
 
   @prop({
     require: true,
     trim: true,
-    // minlength: 20,
-    // maxlength: 1024,
   })
   public description!: string;
 
@@ -51,11 +46,6 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({
     require: true,
     type: () => [String],
-    // validate: {
-    //   validator(v) {
-    //     return v.length === 6;
-    //   },
-    // },
   })
   public photos!: string[];
 
@@ -67,8 +57,6 @@ export class OfferEntity extends defaultClasses.TimeStamps {
 
   @prop({
     require: true,
-    // min: 1,
-    // max: 5,
   })
   public rating!: number;
 
@@ -80,22 +68,16 @@ export class OfferEntity extends defaultClasses.TimeStamps {
 
   @prop({
     require: true,
-    // min: 1,
-    // max: 8,
   })
   public rooms!: number;
 
   @prop({
     require: true,
-    // min: 1,
-    // max: 10,
   })
   public guests!: number;
 
   @prop({
     require: true,
-    // min: 100,
-    // max: 100000,
   })
   public price!: number;
 

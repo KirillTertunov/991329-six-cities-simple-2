@@ -7,7 +7,6 @@ import { DocumentType, types } from '@typegoose/typegoose';
 import { OfferEntity } from './offer.entity.js';
 import { Component } from '../../types/component.types.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
-// import { DEFAULT_OFFER_COUNT } from './offer.constans.js';
 import { SortType } from '../../types/sort-Type.enum.js';
 
 @injectable()
@@ -83,7 +82,6 @@ export default class OfferService implements OfferServiceInterface {
             { $match: { $expr: { $eq: ['$offerId', '$$offerId'] } } },
             { $project: { _id: 1 }}
           ],
-          // change to comments
           as: 'comments'
         },
       },
