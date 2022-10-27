@@ -1,4 +1,3 @@
-// import "reflect-metadata";
 import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
 

@@ -1,9 +1,7 @@
 import {
   IsArray,
-  // IsDateString,
   IsEnum,
   IsInt,
-  // IsMongoId,
   IsObject,
   IsNotEmptyObject,
   Max,
@@ -26,8 +24,6 @@ export default class CreateOfferDto {
   @MinLength(10, {message: 'Minimum title length must be 20'})
   @MaxLength(100, {message: 'Maximum title length must be 1024'})
   public description!: string;
-
-  // public postDate!: Date;
 
   @IsEnum(CityType, {message: 'incorrect city'})
   public city!: CityType;
@@ -69,7 +65,6 @@ export default class CreateOfferDto {
   public facilities!: string[];
 
   public userId!: string;
-  // public comments!: number;
   @IsObject()
   @IsNotEmptyObject()
   public coords!: Coordinates | object;
